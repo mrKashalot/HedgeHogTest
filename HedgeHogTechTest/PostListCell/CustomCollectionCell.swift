@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: Класс ячейки collectionView для скруглениея и добавления label для текста
+//MARK: - Класс ячейки collectionView для скруглениея желтых элементов тегов и добавления label для текста
 
 @IBDesignable
 class CustomCollectionCell: UICollectionViewCell {

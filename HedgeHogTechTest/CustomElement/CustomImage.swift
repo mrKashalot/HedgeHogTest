@@ -7,8 +7,7 @@
 
 import UIKit
 
-//MARK: Класс для UIImage (в контент вью ячейки) для полного скругления аватарок
-
+//MARK: - Класс для UIImage (в контент вью ячейки) для полного скругления аватарок в комментариях
 @IBDesignable
 class CustomImage: UIImageView {
     

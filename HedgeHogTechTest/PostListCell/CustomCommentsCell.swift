@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - класс ячейки комментария
+
 class CustomCommentsCell: UITableViewCell {
 
     @IBOutlet weak var commentAvatarPhoto: CustomImage!

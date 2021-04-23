@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: Класс для View (в контент вью ячейки) для скругления и бортов согласно дизайна
+//MARK: - Класс для View (в контент вью ячейки) для скругления и бортов согласно дизайна
 
 @IBDesignable
 class CustomViewInsideCell: UIView {

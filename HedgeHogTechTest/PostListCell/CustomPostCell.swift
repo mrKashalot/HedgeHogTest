@@ -7,13 +7,13 @@
 
 import UIKit
 
-//MARK: Класс основной ячейки таблицы постов (добавлен делегат коллекции для тегов)
-
-class CustomHomeCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+//MARK: - Класс основной ячейки таблицы постов (добавлен делегат коллекции для тегов)
+class CustomPostCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var collectionArray = ["1", "2", "3", "4", "5", "1", "2", "3", "4", "5", "1", "2", "3", "4", "5"]
+    //MARK: пустой массив для тегов
+    var collectionTagsArray = [String]()
     
-    @IBOutlet weak var customViewInsideCell: CustomViewInsideCell!
+    @IBOutlet weak var customViewInsideCell: UIView!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
@@ -23,26 +23,17 @@ class CustomHomeCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        collectionView.reloadData()
+        //MARK: Вызов функции скругления верхних углов с радиусом 16 (назодится в HelpExtension)
+        postImage.roundImageCorners(corners: [.topLeft, .topRight], radius: 16)
+        
         collectionView.dataSource = self as UICollectionViewDataSource
         collectionView.delegate = self as UICollectionViewDelegate
     }
-    
-    //MARK: Методы для коллекции. Возвращаем количество и формируем контент внутри ячеек
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionArray.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CustomCollectionCell
-        
-        cell.tagName.text = collectionArray[indexPath.row]
-        
-        return cell
-    }
 }
+
+
+
+
 
 
 

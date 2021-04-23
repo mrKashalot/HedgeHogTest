@@ -7,51 +7,71 @@
 
 import Foundation
 
+//MARK: - структуры для парсинга json данных Комментариев
 struct Comments: Codable {
     var data: [UserComments]
     var total: Int
     var page: Int
     var limit: Int
     var offset: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case data, total, page, limit, offset
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        data = try container.decode([UserComments].self, forKey: .data)
+        total = try container.decode(Int.self, forKey: .total)
+        page = try container.decode(Int.self, forKey: .page)
+        limit = try container.decode(Int.self, forKey: .limit)
+        offset = try container.decode(Int.self, forKey: .offset)
+    }
 }
 
 struct UserComments: Codable {
-    var owner: Comments
+    var owner: UserInfo
     var id: String
     var message: String
     var publishDate: String
+    
+    enum CodingKeys: String, CodingKey {
+        case owner, id, message, publishDate
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        owner = try container.decode(UserInfo.self, forKey: .owner)
+        id = try container.decode(String.self, forKey: .id)
+        message = try container.decode(String.self, forKey: .message)
+        publishDate = try container.decode(String.self, forKey: .publishDate)
+    }
 }
 
-"data": [
-       {
-           "owner": {
-               "id": "TaA5kek00ZRHfUjciI0t",
-               "title": "mrs",
-               "firstName": "Els",
-               "lastName": "Ijsseldijk",
-               "email": "els.ijsseldijk@example.com",
-               "picture": "https://randomuser.me/api/portraits/women/75.jpg"
-           },
-           "id": "UEHfuU9iydkVRCm5uJRY",
-           "message": "🤔 Beautiful post!!!",
-           "publishDate": "2020-01-03T00:53:25.492Z"
-       },
-       {
-           "owner": {
-               "id": "1pRsh5nXDIH3pjEOZ17A",
-               "lastName": "Vicente",
-               "title": "miss",
-               "firstName": "Margarita",
-               "email": "margarita.vicente@example.com",
-               "picture": "https://randomuser.me/api/portraits/women/5.jpg"
-           },
-           "id": "KnTLWS1iWGmOR1F0l0to",
-           "message": "Perfect pic",
-           "publishDate": "2019-12-27T21:23:59.282Z"
-       }
-   ],
-   "total": 2,
-   "page": 0,
-   "limit": 20,
-   "offset": 0
+struct UserInfo: Codable {
+    var id: String
+    var title: String
+    var firstName: String
+    var lastName: String
+    var email: String
+    var picture: String
+    
+    //MARK: в струкуре не приходит, но для удобсттва обьединим имя и фамилию в одно целое
+    var fullName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, title, email, picture, firstName, lastName, fullName
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        firstName = try container.decode(String.self, forKey: .firstName)
+        lastName = try container.decode(String.self, forKey: .lastName)
+        fullName = "\(String(describing: firstName))" + " \(String(describing: lastName))"
+        email = try container.decode(String.self, forKey: .email)
+        picture = try container.decode(String.self, forKey: .picture)
+    }
 }
+
